@@ -1,13 +1,15 @@
-import type {NextConfig} from 'next';
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  /* Build Optimizations */
   typescript: {
     ignoreBuildErrors: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
   },
+
+  /* Images Remote Whitelisting */
   images: {
     remotePatterns: [
       {
@@ -24,18 +26,36 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "upload.wikimedia.org", // Added this line
+        hostname: "upload.wikimedia.org",
         port: "",
         pathname: "/**",
       },
-      // Add leaflet tile servers
+      // ✅ OpenStreetMap Dynamic Tile Subdomains Fix
       {
         protocol: "https",
-        hostname: "*.tile.openstreetmap.org", // Allows a.tile, b.tile, etc.
+        hostname: "**.tile.openstreetmap.org", // Handles a.tile, b.tile, c.tile recursively
+        port: "",
+        pathname: "/**",
+      },
+      // ✅ Firebase Storage (For dynamic image uploads in FixIt)
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
         port: "",
         pathname: "/**",
       },
     ],
+  },
+
+  /* ✅ Webpack Memory Protection Config (Brings down compilation RAM usage) */
+  webpack: (config, { dev, isServer }) => {
+    if (dev && !isServer) {
+      config.cache = {
+        type: 'memory',
+        maxGenerations: 1, // Purani unused compiler cache ko turant clean karne ke liye
+      };
+    }
+    return config;
   },
 };
 

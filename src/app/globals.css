@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 body {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; /* Moved font-family here */
-  @apply bg-background text-foreground transition-colors duration-200; /* Added smooth transition */
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  @apply bg-background text-foreground transition-colors duration-200;
 }
 
 @layer base {
@@ -13,33 +13,33 @@ body {
     /* Secondary: #ecf0f1 (Neutral Gray) */
     /* Accent: #2ecc71 (Vibrant Green) */
 
-    --background: 0 0% 100%; /* White background */
-    --foreground: 210 9% 31%; /* Dark Gray text */
+    --background: 0 0% 100%;
+    --foreground: 210 9% 31%;
 
-    --card: 0 0% 100%; /* White cards */
-    --card-foreground: 210 9% 31%; /* Dark Gray text on cards */
+    --card: 0 0% 100%;
+    --card-foreground: 210 9% 31%;
 
-    --popover: 0 0% 100%; /* White popovers */
-    --popover-foreground: 210 9% 31%; /* Dark Gray text on popovers */
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 9% 31%;
 
-    --primary: 207 68% 53%; /* #3498db */
-    --primary-foreground: 0 0% 100%; /* White text on primary */
+    --primary: 207 68% 53%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 195 17% 94%; /* #ecf0f1 */
-    --secondary-foreground: 210 9% 31%; /* Dark Gray text on secondary */
+    --secondary: 195 17% 94%;
+    --secondary-foreground: 210 9% 31%;
 
-    --muted: 195 17% 94%; /* #ecf0f1 */
-    --muted-foreground: 210 4% 46%; /* Lighter Gray for muted text */
+    --muted: 195 17% 94%;
+    --muted-foreground: 210 4% 46%;
 
-    --accent: 145 63% 49%; /* #2ecc71 */
-    --accent-foreground: 0 0% 100%; /* White text on accent */
+    --accent: 145 63% 49%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%; /* Default Red */
-    --destructive-foreground: 0 0% 98%; /* White text on destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 210 10% 89%; /* Light Gray border */
-    --input: 210 10% 89%; /* Light Gray input border */
-    --ring: 207 68% 53%; /* Primary color for focus rings */
+    --border: 210 10% 89%;
+    --input: 210 10% 89%;
+    --ring: 207 68% 53%;
 
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
@@ -48,44 +48,42 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
 
-    /* Sidebar specific theme adjustments if needed, using existing variables for consistency */
-    --sidebar-background: 195 17% 97%; /* Slightly off-white/gray */
-    --sidebar-foreground: 210 9% 31%; /* Dark Gray text */
-    --sidebar-primary: 207 68% 53%; /* #3498db */
-    --sidebar-primary-foreground: 0 0% 100%; /* White */
-    --sidebar-accent: 207 68% 90%; /* Lighter blue for hover/active */
-    --sidebar-accent-foreground: 207 68% 30%; /* Darker blue */
-    --sidebar-border: 210 10% 89%; /* Light Gray border */
-    --sidebar-ring: 207 68% 53%; /* Primary color for focus */
+    --sidebar-background: 195 17% 97%;
+    --sidebar-foreground: 210 9% 31%;
+    --sidebar-primary: 207 68% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 207 68% 90%;
+    --sidebar-accent-foreground: 207 68% 30%;
+    --sidebar-border: 210 10% 89%;
+    --sidebar-ring: 207 68% 53%;
   }
 
   .dark {
-    /* Define dark mode variables, inverting or adjusting the light theme */
-    --background: 210 9% 15%; /* Dark Gray background */
-    --foreground: 0 0% 98%; /* Almost White text */
+    --background: 210 9% 15%;
+    --foreground: 0 0% 98%;
 
-    --card: 210 9% 20%; /* Slightly lighter dark gray for cards */
+    --card: 210 9% 20%;
     --card-foreground: 0 0% 98%;
 
     --popover: 210 9% 15%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 207 68% 53%; /* #3498db */
+    --primary: 207 68% 53%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 9% 25%; /* Darker gray for secondary elements */
+    --secondary: 210 9% 25%;
     --secondary-foreground: 0 0% 98%;
 
     --muted: 210 9% 25%;
-    --muted-foreground: 210 5% 63%; /* Lighter gray for muted text */
+    --muted-foreground: 210 5% 63%;
 
-    --accent: 145 63% 49%; /* #2ecc71 */
+    --accent: 145 63% 49%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 70% 50%; /* Slightly brighter Red in dark mode for visibility */
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 210 5% 30%; /* Medium Gray border */
+    --border: 210 5% 30%;
     --input: 210 5% 30%;
     --ring: 207 68% 53%;
 
@@ -95,35 +93,45 @@ body {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
 
-    /* Dark Sidebar */
-    --sidebar-background: 210 9% 10%; /* Very dark gray */
-    --sidebar-foreground: 0 0% 98%; /* Almost White text */
-    --sidebar-primary: 207 68% 53%; /* #3498db */
+    --sidebar-background: 210 9% 10%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 207 68% 53%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 9% 25%; /* Dark gray for hover/active */
-    --sidebar-accent-foreground: 0 0% 98%; /* Keep text white/light on accent */
-    --sidebar-border: 210 5% 30%; /* Medium Gray border */
+    --sidebar-accent: 210 9% 25%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 210 5% 30%;
     --sidebar-ring: 207 68% 53%;
-  }
+  } /* ✅ Yahan .dark block complete band ho gaya */
+}
+
+/* ✅ Map overrides ko global level par rakha hai taaki light/dark dono mode mein map render ho sake */
+.leaflet-container {
+  height: 100% !important;
+  width: 100% !important;
+  z-index: 1;
+}
+
+.map-wrapper-box {
+  display: block !important;
+  visibility: visible !important;
+  height: 400px !important;
+  min-height: 400px !important;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
-  /* Body styles moved to the top */
 }
 
-/* Add clean and readable sans-serif font */
 @layer base {
   html {
-    /* font-family moved to body */
     line-height: 1.5;
     font-weight: 400;
 
     color-scheme: light dark;
-    color: var(--foreground); /* Use CSS var */
-    background-color: var(--background); /* Use CSS var */
+    color: var(--foreground);
+    background-color: var(--background);
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;

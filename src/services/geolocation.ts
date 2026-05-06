@@ -1,37 +1,37 @@
 /**
- * Represents a geographical coordinate with latitude and longitude.
+ * Real-time geolocation utilities for FixIt
+ * Handles:
+ * - GPS coordinates
+ * - Reverse geocoding
+ * - Live location tracking
+ * - Browser permission handling
  */
+
 export interface Coordinate {
-  /**
-   * The latitude of the location.
-   */
   latitude: number;
-  /**
-   * The longitude of the location.
-   */
   longitude: number;
+  accuracy?: number;
 }
 
-/**
- * Represents a location with coordinates and an optional address.
- */
 export interface LocationInfo extends Coordinate {
-    /**
-     * The street address associated with the coordinates, if available.
-     */
-    address?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  country?: string;
 }
 
 /**
- * Asynchronously retrieves the current geographical location of the user using the browser's Geolocation API.
- *
- * @returns A promise that resolves to a Coordinate object containing the latitude and longitude.
- * @throws {Error} If the browser does not support Geolocation or the user denies permission, or if retrieval fails.
+ * Get current GPS coordinates
  */
 export async function getCurrentCoordinates(): Promise<Coordinate> {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
-      return reject(new Error("Geolocation is not supported by your browser."));
+      reject(
+        new Error(
+          "Geolocation is not supported by this browser."
+        )
+      );
+      return;
     }
 
     navigator.geolocation.getCurrentPosition(
@@ -39,70 +39,141 @@ export async function getCurrentCoordinates(): Promise<Coordinate> {
         resolve({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
+          accuracy: position.coords.accuracy,
         });
       },
       (error) => {
         let message = "Failed to retrieve location.";
+
         switch (error.code) {
           case error.PERMISSION_DENIED:
-            message = "Location permission denied. Please enable it in your browser settings.";
+            message =
+              "Location permission denied. Please enable location access.";
             break;
+
           case error.POSITION_UNAVAILABLE:
-            message = "Location information is unavailable.";
+            message =
+              "Location information is unavailable.";
             break;
+
           case error.TIMEOUT:
-            message = "The request to get user location timed out.";
+            message =
+              "Location request timed out.";
             break;
-          default:
-             message = `An unknown error occurred (Code: ${error.code}).`;
-             break;
         }
-         console.error("Geolocation error:", error.message);
-         reject(new Error(message));
+
+        reject(new Error(message));
       },
       {
-        // Optional options
-        enableHighAccuracy: true, // Request more accurate position
-        timeout: 15000, // Increased timeout to 15 seconds
-        maximumAge: 60000, // Allow cached position up to 1 minute old
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0,
       }
     );
   });
 }
 
 /**
- * Simulates fetching a street address based on latitude and longitude.
- * In a real application, this would call a reverse geocoding API (e.g., Google Maps Geocoding API, OpenStreetMap Nominatim).
- *
- * @param latitude - The latitude of the location.
- * @param longitude - The longitude of the location.
- * @returns A promise that resolves to a string containing the mock address.
+ * Reverse geocoding using OpenStreetMap Nominatim API
+ * Converts coordinates into readable address
  */
-export async function getAddressFromCoordinates(latitude: number, longitude: number): Promise<string> {
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+export async function getAddressFromCoordinates(
+  latitude: number,
+  longitude: number
+): Promise<Partial<LocationInfo>> {
+  try {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
+    );
 
-    // Return a mock address including coordinates for demonstration
-    // In a real scenario, you'd parse the response from a geocoding service.
-    return `Mock Address near ${latitude.toFixed(4)}, ${longitude.toFixed(4)}, Cityville`;
+    if (!response.ok) {
+      throw new Error("Failed to fetch address.");
+    }
+
+    const data = await response.json();
+
+    return {
+      address: data.display_name,
+      city:
+        data.address?.city ||
+        data.address?.town ||
+        data.address?.village ||
+        "",
+      state: data.address?.state || "",
+      country: data.address?.country || "",
+    };
+  } catch (error) {
+    console.error("Reverse geocoding error:", error);
+
+    return {
+      address: "Address unavailable",
+    };
+  }
 }
 
 /**
- * Asynchronously retrieves the current geographical location (coordinates and address) of the user.
- *
- * @returns A promise that resolves to a LocationInfo object containing latitude, longitude, and address.
- * @throws {Error} If coordinates or address retrieval fails.
+ * Get complete location info
  */
 export async function getCurrentLocationInfo(): Promise<LocationInfo> {
-    try {
-        const coords = await getCurrentCoordinates();
-        const address = await getAddressFromCoordinates(coords.latitude, coords.longitude);
-        return {
-            ...coords,
-            address: address,
-        };
-    } catch (error) {
-        // Rethrow or handle specific errors as needed
-        throw error;
+  try {
+    const coords = await getCurrentCoordinates();
+
+    const addressData = await getAddressFromCoordinates(
+      coords.latitude,
+      coords.longitude
+    );
+
+    return {
+      ...coords,
+      ...addressData,
+    };
+  } catch (error) {
+    throw error;
+  }
+}
+
+/**
+ * Watch user location in real-time
+ * Useful for live tracking features
+ */
+export function watchUserLocation(
+  onUpdate: (location: Coordinate) => void,
+  onError?: (error: GeolocationPositionError) => void
+) {
+  if (!navigator.geolocation) {
+    throw new Error(
+      "Geolocation is not supported by this browser."
+    );
+  }
+
+  const watchId = navigator.geolocation.watchPosition(
+    (position) => {
+      onUpdate({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        accuracy: position.coords.accuracy,
+      });
+    },
+    (error) => {
+      console.error("Location watch error:", error);
+
+      if (onError) {
+        onError(error);
+      }
+    },
+    {
+      enableHighAccuracy: true,
+      maximumAge: 0,
+      timeout: 10000,
     }
+  );
+
+  return watchId;
+}
+
+/**
+ * Stop watching user location
+ */
+export function stopWatchingLocation(watchId: number) {
+  navigator.geolocation.clearWatch(watchId);
 }

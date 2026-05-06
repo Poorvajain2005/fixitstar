@@ -1,16 +1,21 @@
-'use client';
-import { useAuth } from '@/context/AuthContext';
-import ProtectedRoute from '@/components/auth/ProtectedRoute';
+"use client";
 
-export default function DashboardPage() {
-  const { user } = useAuth();
+import { useState, useMemo } from "react";
+import dynamic from "next/dynamic";
 
-  return (
-    <ProtectedRoute>
-      <div className="p-6">
-        <h1 className="text-2xl font-bold">Welcome, {user?.email}</h1>
-        {/* Dashboard content goes here */}
-      </div>
-    </ProtectedRoute>
-  );
-}
+// ❌ Direct import ko delete karo:
+// import IssueMap from "@/components/shared/issue-map";
+
+// ✅ Is dynamic import ko copy-paste karo (Saves layout from SSR crash):
+const MapWithNoSSR = useMemo(
+  () =>
+    dynamic(() => import("@/components/shared/issue-map"), {
+      loading: () => (
+        <div className="w-full h-[400px] bg-slate-800 animate-pulse rounded-xl flex items-center justify-center border border-slate-700">
+          <span className="text-sm font-medium text-slate-400">Loading Hotspots Map...</span>
+        </div>
+      ),
+      ssr: false, // Disables server-side rendering entirely for Leaflet
+    }),
+  []
+);

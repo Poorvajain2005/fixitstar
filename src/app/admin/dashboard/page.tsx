@@ -339,14 +339,13 @@ export default function AdminDashboardPage() {
                  {isMapVisible ? 'Hide Map' : 'Show Map'}
              </Button>
          </div>
-         {isMapVisible && (
-             <Card className="shadow-md overflow-hidden">
-                 <CardContent className="p-0">
-                     {/* Render map only when mapReady is true */}
-                     {mapReady ? <GoogleIssueMap issues={filteredIssues} /> : <MapLoadingSkeleton />}
-                 </CardContent>
-             </Card>
-         )}
+        {isMapVisible && (
+  <Card className="shadow-md overflow-hidden">
+    <CardContent className="p-0">
+      <GoogleIssueMap issues={filteredIssues} />
+    </CardContent>
+  </Card>
+)}
        </section>
 
 
