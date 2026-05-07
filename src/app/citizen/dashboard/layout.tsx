@@ -1,6 +1,6 @@
 "use client";
 
-import React, { type ReactNode } from "react";
+import React, { type ReactNode, Suspense } from "react";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/shared/navbar";
@@ -161,7 +161,9 @@ export default function CitizenDashboardLayout({
 
             {/* MAIN CHILDREN SLOTS */}
             <div className="relative z-10 p-4 md:p-8">
-              {children}
+              <Suspense fallback={<div className="w-full h-[400px] flex items-center justify-center">Loading...</div>}>
+                {children}
+              </Suspense>
             </div>
           </div>
         </div>

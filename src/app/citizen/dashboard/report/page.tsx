@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -520,7 +520,8 @@ export default function ReportIssuePage() {
   };
 
   return (
-    <div className="relative max-w-5xl mx-auto px-4 py-10">
+    <Suspense fallback={<div className="w-full h-[400px] flex items-center justify-center">Loading...</div>}>
+      <div className="relative max-w-5xl mx-auto px-4 py-10">
       {/* BACKGROUND GRAPHICS */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-blue-500/10 blur-3xl rounded-full" />
@@ -1028,6 +1029,7 @@ export default function ReportIssuePage() {
           </Form>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </Suspense>
   );
 }
