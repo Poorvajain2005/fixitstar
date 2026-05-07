@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 
 import { useEffect, useState } from "react";
@@ -46,3 +47,29 @@ export default function IssueMap({ issues }: { issues: any[] }) {
     </div>
   );
 }
+=======
+useEffect(() => {
+    let isMounted = true;
+
+    const interval = setInterval(async () => {
+        try {
+            const current = await mockFetchAllIssues();
+
+            if (!isMounted) return;
+
+            setIssuesList(prev => {
+                const same = JSON.stringify(prev) === JSON.stringify(current);
+                return same ? prev : current;
+            });
+
+        } catch (err) {
+            console.error(err);
+        }
+    }, 5000);
+
+    return () => {
+        isMounted = false;
+        clearInterval(interval);
+    };
+}, []);
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc

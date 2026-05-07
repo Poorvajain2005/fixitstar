@@ -1,5 +1,6 @@
 "use client";
 
+<<<<<<< HEAD
 import { useEffect, useMemo, useRef, useState } from "react";
 import { format } from "date-fns";
 import L from "leaflet";
@@ -8,12 +9,18 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import { Issue } from "@/types/issue";
 import { Badge } from "@/components/ui/badge";
+=======
+import { format } from 'date-fns';
+import { Issue } from '@/types/issue';
+import { Badge } from '@/components/ui/badge';
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
 
 interface GoogleIssueMapProps {
   issues: Issue[];
 }
 
 const GoogleIssueMap: React.FC<GoogleIssueMapProps> = ({ issues }) => {
+<<<<<<< HEAD
   const [mounted, setMounted] = useState(false);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<L.Map | null>(null);
@@ -118,6 +125,28 @@ const GoogleIssueMap: React.FC<GoogleIssueMapProps> = ({ issues }) => {
           <p className="text-sm text-muted-foreground">No issues available to display on the map.</p>
         )}
       </div>
+=======
+  const validIssues = issues.filter(issue => typeof issue.location.latitude === 'number' && typeof issue.location.longitude === 'number');
+  const issue = validIssues[0]; // Get the first valid issue for display
+
+  return (
+    <div className="p-4 rounded-lg border">
+      {issue ? (
+        <div>
+          <h3 className="font-semibold text-lg">{issue.title}</h3>
+          <div className="flex gap-2 my-2">
+            <Badge variant="outline">{issue.type}</Badge>
+            <Badge variant={issue.priority === 'High' ? 'destructive' : issue.priority === 'Medium' ? 'default' : 'secondary'}>
+              {issue.priority} Priority
+            </Badge>
+          </div>
+          <p className="text-sm text-muted-foreground">{issue.location.address || 'Address not available'}</p>
+          <p className="text-xs text-muted-foreground">Reported: {format(new Date(issue.reportedAt), 'MMM d, yyyy')}</p>
+        </div>
+      ) : (
+        <p className="text-center text-muted-foreground">No issues available to display on the map.</p>
+      )}
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
     </div>
   );
 };

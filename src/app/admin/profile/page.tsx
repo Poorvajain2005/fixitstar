@@ -11,9 +11,15 @@ import { Edit, Save, KeyRound, User, Mail, ShieldCheck, Briefcase, BarChart3, Ch
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+<<<<<<< HEAD
 import React, { useState, useEffect, useRef } from 'react';
 import { formatDistanceToNowStrict } from 'date-fns'; // Import date-fns function
 import { getUserProfile, setUserProfile, updateUserPassword, UserProfile } from "@/lib/mock-users";
+=======
+import React, { useState, useEffect } from 'react';
+import { formatDistanceToNowStrict } from 'date-fns'; // Import date-fns function
+import { getUserProfile, setUserProfile, UserProfile } from "@/lib/mock-users";
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
 
 // Mock Admin Activity Data
 const mockAdminActivities = [
@@ -90,7 +96,11 @@ export default function AdminProfilePage() {
     const [profile, setProfile] = useState<UserProfile | null>(null);
     useEffect(() => {
         if (userEmail) {
+<<<<<<< HEAD
             const loaded = getUserProfile(userEmail, "admin");
+=======
+            const loaded = getUserProfile(userEmail);
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
             if (loaded) setProfile({ ...loaded });
         }
     }, [userEmail]);
@@ -101,9 +111,12 @@ export default function AdminProfilePage() {
     const [phone, setPhone] = useState("");
     const [location, setLocation] = useState("");
     const [bio, setBio] = useState("");
+<<<<<<< HEAD
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const fileInputRef = useRef<HTMLInputElement>(null);
+=======
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
     const { toast } = useToast();
 
     // Sync profile fields to state when loaded
@@ -126,7 +139,11 @@ export default function AdminProfilePage() {
                 location,
                 bio,
             };
+<<<<<<< HEAD
             setUserProfile(userEmail, updated, "admin");
+=======
+            setUserProfile(userEmail, updated);
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
             setProfile(updated);
             toast({ title: "Profile Updated", description: "Admin profile changes have been saved." });
         }
@@ -134,6 +151,7 @@ export default function AdminProfilePage() {
     };
 
     const handleChangePassword = () => {
+<<<<<<< HEAD
         if (!userEmail) return;
         const result = updateUserPassword(userEmail, "admin", currentPassword, newPassword);
         toast({
@@ -161,6 +179,9 @@ export default function AdminProfilePage() {
         toast({ title: "Profile Photo Updated", description: "Admin profile photo has been updated." });
       };
       reader.readAsDataURL(file);
+=======
+        toast({ title: "Change Password", description: "Password change feature coming soon." });
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
     };
 
     const StatItem = ({ value, label }: { value: number | string; label: string }) => (
@@ -186,6 +207,7 @@ export default function AdminProfilePage() {
                                 <AvatarImage src={profile.photoURL || undefined} alt={displayName || "Admin avatar"} data-ai-hint="person face portrait administrator" />
                                 <AvatarFallback className="bg-primary text-primary-foreground text-3xl font-semibold">{getInitials(displayName)}</AvatarFallback>
                             </Avatar>
+<<<<<<< HEAD
                             <Button
                               variant="outline"
                               size="icon"
@@ -203,6 +225,12 @@ export default function AdminProfilePage() {
                               className="hidden"
                               onChange={handlePhotoSelect}
                             />
+=======
+                            <Button variant="outline" size="icon" className="absolute bottom-0 right-0 rounded-full h-8 w-8 group-hover:opacity-100 opacity-0 transition-opacity bg-background/80 hover:bg-muted" disabled>
+                                <Camera className="h-4 w-4" />
+                                <span className="sr-only">Change photo (disabled)</span>
+                            </Button>
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
                         </div>
                         <CardTitle className="text-2xl">{displayName || "Admin User"}</CardTitle>
                         <CardDescription className="text-muted-foreground">{profile.email}</CardDescription>
@@ -343,6 +371,7 @@ export default function AdminProfilePage() {
                                <CardContent className="space-y-6">
                                    <div className="space-y-3">
                                         <h3 className="text-base font-semibold">Security</h3>
+<<<<<<< HEAD
                                         <div className="grid gap-3 md:grid-cols-2">
                                           <Input
                                             type="password"
@@ -357,6 +386,8 @@ export default function AdminProfilePage() {
                                             onChange={(e) => setNewPassword(e.target.value)}
                                           />
                                         </div>
+=======
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
                                         <Button variant="outline" onClick={handleChangePassword} className="w-full sm:w-auto">
                                            <KeyRound className="mr-2 h-4 w-4" /> Change Password
                                         </Button>

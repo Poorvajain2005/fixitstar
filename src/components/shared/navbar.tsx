@@ -12,7 +12,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import AiAnalysisComponent from "@/components/shared/ai-analysis"; // Verified import path
 import React from "react";
 import { getUserProfile, UserProfile } from "@/lib/mock-users";
+<<<<<<< HEAD
 import { useTheme } from "@/context/ThemeContext";
+=======
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
 
 interface NavItem {
   href: string;
@@ -24,8 +27,11 @@ interface NavItem {
 interface NavbarProps {
   navItems: NavItem[];
   userType: "Citizen" | "Admin";
+<<<<<<< HEAD
   sticky?: boolean;
   className?: string;
+=======
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
 }
 
 // Mock logout function
@@ -34,11 +40,17 @@ const mockSignOut = async () => {
   console.log("User logged out");
 };
 
+<<<<<<< HEAD
 export function Navbar({ navItems, userType, sticky = true, className }: NavbarProps) {
   const router = useRouter();
   const { toast } = useToast();
   const { theme, toggleTheme } = useTheme();
   const [isMounted, setIsMounted] = React.useState(false);
+=======
+export function Navbar({ navItems, userType }: NavbarProps) {
+  const router = useRouter();
+  const { toast } = useToast();
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
   const [isAnalysisDialogOpen, setIsAnalysisDialogOpen] = React.useState(false);
 
   // Get logged-in user email from localStorage
@@ -49,15 +61,22 @@ export function Navbar({ navItems, userType, sticky = true, className }: NavbarP
       email = localStorage.getItem(userType === 'Citizen' ? 'citizenUserEmail' : 'adminUserEmail');
     }
     if (email) {
+<<<<<<< HEAD
       const p = getUserProfile(email, userType === "Citizen" ? "citizen" : "admin");
+=======
+      const p = getUserProfile(email);
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
       if (p) setProfile(p);
     }
   }, [userType]);
 
+<<<<<<< HEAD
   React.useEffect(() => {
     setIsMounted(true);
   }, []);
 
+=======
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
   const handleLogout = async () => {
     try {
       await mockSignOut();
@@ -89,6 +108,7 @@ export function Navbar({ navItems, userType, sticky = true, className }: NavbarP
 
   const profileHref = userType === 'Admin' ? '/admin/profile' : '/citizen/profile';
 
+<<<<<<< HEAD
   return (
     <nav
       className={cn(
@@ -97,19 +117,63 @@ export function Navbar({ navItems, userType, sticky = true, className }: NavbarP
         className
       )}
     >
+=======
+  // Dark mode toggle button
+  function DarkModeToggle() {
+    React.useEffect(() => {
+      // On mount, set theme from localStorage or system
+      if (typeof window !== 'undefined') {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      }
+    }, []);
+
+    const toggleTheme = () => {
+      if (typeof window !== 'undefined') {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      }
+    };
+    return (
+      <Button variant="ghost" size="icon" aria-label="Toggle dark mode" onClick={toggleTheme} className="ml-2">
+        <span className="sr-only">Toggle dark mode</span>
+        <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="5" />
+          <path d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 7.07l-1.41-1.41M6.34 6.34l-1.41-1.41m12.02 0l-1.41 1.41M6.34 17.66l-1.41 1.41" />
+        </svg>
+      </Button>
+    );
+  }
+
+  return (
+    <nav className="bg-card border-b sticky top-0 z-50 shadow-sm backdrop-blur-sm bg-opacity-90">
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
       <div className="container mx-auto px-4 h-16 flex justify-between items-center">
         <Link href={userType === 'Citizen' ? '/citizen/dashboard' : '/admin/dashboard'} className="text-xl font-bold text-primary flex items-center gap-2 hover:opacity-90 transition-opacity">
           <ShieldAlert className="h-6 w-6" />
           FixIt <span className="text-sm font-normal text-muted-foreground ml-1">({userType})</span>
         </Link>
+<<<<<<< HEAD
         <div className="flex items-center gap-2">
+=======
+        <div className="flex items-center gap-1">
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
           {navItems.map((item) => (
             <Button
                key={item.href}
                variant={item.isActive ? "secondary" : "ghost"}
                className={cn(
+<<<<<<< HEAD
                   "text-sm font-medium rounded-xl",
                   item.isActive ? "text-primary bg-primary/10" : "text-foreground hover:text-primary hover:bg-accent/50"
+=======
+                  "text-sm font-medium transition-colors duration-150",
+                  item.isActive ? "text-primary" : "text-foreground hover:text-primary hover:bg-accent/50"
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
                )}
                size="sm"
                asChild
@@ -143,6 +207,7 @@ export function Navbar({ navItems, userType, sticky = true, className }: NavbarP
           )}
 
           {/* User Profile Dropdown */}
+<<<<<<< HEAD
           {isMounted ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -199,6 +264,46 @@ export function Navbar({ navItems, userType, sticky = true, className }: NavbarP
               {isMounted && theme === "dark" ? "🌙" : "☀️"}
             </span>
           </Button>
+=======
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="relative h-9 w-9 rounded-full ml-3 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                <Avatar className="h-8 w-8">
+                   <AvatarImage src={profile?.photoURL || undefined} alt={profile?.displayName || "User avatar"} data-ai-hint="person face portrait" />
+                  <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">{getInitials(profile?.displayName)}</AvatarFallback>
+                </Avatar>
+                 <span className="sr-only">User Menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end" forceMount>
+              <DropdownMenuLabel className="font-normal">
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium leading-none">{profile?.displayName || "User"}</p>
+                  <p className="text-xs leading-none text-muted-foreground">
+                    {profile?.email}
+                  </p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+               {/* Use Link component inside DropdownMenuItem with asChild */}
+               <DropdownMenuItem asChild className="cursor-pointer">
+                 <Link href={profileHref}>
+                   <UserCircle className="mr-2 h-4 w-4" />
+                   <span>Profile</span>
+                 </Link>
+               </DropdownMenuItem>
+               {/* Add other items like Settings if needed */}
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:bg-destructive/10 focus:text-destructive cursor-pointer">
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Dark mode toggle */}
+          <DarkModeToggle />
+>>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
         </div>
       </div>
     </nav>
