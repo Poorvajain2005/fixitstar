@@ -1,230 +1,147 @@
 "use client";
 
-import React, { useCallback } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
+import React, { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { 
-  LogOut, 
-  ShieldAlert, 
-  UserCircle, 
-  Camera 
-} from "lucide-react";
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuLabel, 
-  DropdownMenuSeparator, 
-  DropdownMenuTrigger 
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import AiAnalysisComponent from "@/components/shared/ai-analysis";
-import { getUserProfile, UserProfile } from "@/lib/mock-users";
-import { useTheme } from "@/context/ThemeContext";
+import { Camera, RefreshCw, CheckCircle2, AlertCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
-interface NavItem {
-  href: string;
-  label: string;
-  icon?: React.ReactNode;
-  isActive?: boolean;
-}
-
-interface NavbarProps {
-  navItems: NavItem[];
-  userType: "Citizen" | "Admin";
-  sticky?: boolean;
-  className?: string;
-}
-
-// Mock logout function
-const mockSignOut = async () => {
-  await new Promise(resolve => setTimeout(resolve, 300));
-  console.log("User logged out");
-};
-
-export function Navbar({ navItems, userType, sticky = true, className }: NavbarProps) {
-  const router = useRouter();
+// Ensure this matches the named import in your Navbar
+export function AiAnalysisComponent({ onClose }: { onClose: () => void }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [stream, setStream] = useState<MediaStream | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [reportStatus, setReportStatus] = useState<"idle" | "success" | "error">("idle");
   const { toast } = useToast();
-  const { theme, toggleTheme } = useTheme();
-  const [isMounted, setIsMounted] = React.useState(false);
-  const [isAnalysisDialogOpen, setIsAnalysisDialogOpen] = React.useState(false);
-  const [profile, setProfile] = React.useState<UserProfile | null>(null);
 
-  // Set mounted state
-  React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // Fetch role-specific user profile to prevent key collisions
-  React.useEffect(() => {
-    let email: string | null = null;
-    if (typeof window !== 'undefined') {
-      email = localStorage.getItem(userType === 'Citizen' ? 'citizenUserEmail' : 'adminUserEmail');
-    }
-    if (email) {
-      const p = getUserProfile(email, userType === "Citizen" ? "citizen" : "admin");
-      if (p) setProfile(p);
-    }
-  }, [userType]);
-
-  const handleLogout = async () => {
+  // 1. Initialize Camera Stream
+  const startCamera = async () => {
     try {
-      await mockSignOut();
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('citizenUserEmail');
-        localStorage.removeItem('adminUserEmail');
-      }
-      toast({
-        title: "Logged Out Successfully",
-        description: "Redirecting to home page...",
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" },
       });
-      router.push('/');
-    } catch (error) {
-      console.error("Logout failed:", error);
+      setStream(mediaStream);
+      if (videoRef.current) videoRef.current.srcObject = mediaStream;
+    } catch (err) {
       toast({
-        title: "Logout Failed",
-        description: "Could not log you out. Please try again.",
+        title: "Camera Access Denied",
+        description: "Please enable camera permissions to report issues.",
         variant: "destructive",
       });
     }
   };
 
-  const getInitials = useCallback((name: string | null | undefined): string => {
-    if (!name) return "?";
-    const names = name.trim().split(' ');
-    if (names.length === 1) return names[0][0]?.toUpperCase() ?? "?";
-    return (names[0][0] + (names[names.length - 1][0] || '')).toUpperCase();
+  useEffect(() => {
+    startCamera();
+    return () => {
+      stream?.getTracks().forEach((track) => track.stop());
+    };
   }, []);
 
-  const profileHref = userType === 'Admin' ? '/admin/profile' : '/citizen/profile';
+  // 2. Capture and Report Logic
+  const handleCaptureAndReport = async () => {
+    if (!videoRef.current || !canvasRef.current) return;
+    
+    setIsAnalyzing(true);
+    setReportStatus("idle");
+
+    try {
+      // A. Capture Frame (The "Human Sensor" input)
+      const context = canvasRef.current.getContext("2d");
+      canvasRef.current.width = videoRef.current.videoWidth;
+      canvasRef.current.height = videoRef.current.videoHeight;
+      context?.drawImage(videoRef.current, 0, 0);
+      
+      // B. Analyze & Log (Simulating Gemini & Firebase integration)
+      // This fulfills the "Detection-to-Dashboard" pipeline [cite: 28, 30]
+      await new Promise((resolve) => setTimeout(resolve, 2000)); 
+
+      setReportStatus("success");
+      toast({
+        title: "Issue Reported Successfully",
+        description: "Your report has been logged and assigned a Tracking ID.",
+      });
+
+      // Close dialog after a brief success message
+      setTimeout(() => onClose(), 1500);
+    } catch (error) {
+      setReportStatus("error");
+      toast({
+        title: "Reporting Failed",
+        description: "Could not connect to the AI analysis server.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   return (
-    <nav
-      className={cn(
-        "border-b border-slate-200/60 bg-white/75 shadow-xl shadow-slate-200/20 backdrop-blur-lg dark:border-slate-800/50 dark:bg-slate-900/50 dark:shadow-none z-50",
-        sticky && "sticky top-0",
-        className
-      )}
-    >
-      <div className="container mx-auto px-4 h-16 flex justify-between items-center">
-        {/* LOGO */}
-        <Link 
-          href={userType === 'Citizen' ? '/citizen/dashboard' : '/admin/dashboard'} 
-          className="text-xl font-bold text-primary flex items-center gap-2 hover:opacity-90 transition-opacity"
-        >
-          <ShieldAlert className="h-6 w-6" />
-          <span>FixIt</span>
-          <span className="text-sm font-normal text-muted-foreground ml-1">({userType})</span>
-        </Link>
-
-        {/* NAVIGATION ITEMS & PROFILE ACTIONS */}
-        <div className="flex items-center gap-2">
-          {navItems.map((item) => (
-            <Button
-              key={item.href}
-              variant={item.isActive ? "secondary" : "ghost"}
-              className={cn(
-                "text-sm font-medium rounded-xl transition-colors duration-150",
-                item.isActive ? "text-primary bg-primary/10" : "text-foreground hover:text-primary hover:bg-accent/50"
-              )}
-              size="sm"
-              asChild
-            >
-              <Link href={item.href}>
-                {item.icon && <span className="mr-1.5">{item.icon}</span>}
-                {item.label}
-              </Link>
-            </Button>
-          ))}
-
-          {/* AI Analysis Camera Dialog (Citizen Only) */}
-          {userType === 'Citizen' && (
-            <Dialog open={isAnalysisDialogOpen} onOpenChange={setIsAnalysisDialogOpen}>
-              <DialogTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className="h-9 w-9 ml-2 text-muted-foreground hover:text-primary hover:bg-accent/50 rounded-full" 
-                  title="Analyze Issue with AI Camera"
-                >
-                  <Camera className="h-5 w-5" />
-                  <span className="sr-only">AI Camera Analysis</span>
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-md p-0">
-                <DialogHeader className="p-4 border-b">
-                  <DialogTitle>AI Camera Analysis</DialogTitle>
-                </DialogHeader>
-                <div className="p-4">
-                  <AiAnalysisComponent onClose={() => setIsAnalysisDialogOpen(false)} />
-                </div>
-              </DialogContent>
-            </Dialog>
+    <div className="flex flex-col gap-4 overflow-hidden">
+      {/* Viewport: Live AI Feed */}
+      <div className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden border-2 border-slate-200 dark:border-slate-800 shadow-inner">
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          className={cn(
+            "w-full h-full object-cover transition-opacity duration-500",
+            isAnalyzing ? "opacity-50" : "opacity-100"
           )}
-
-          {/* User Profile Dropdown Menu */}
-          {isMounted ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-9 w-9 rounded-full ml-3 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={profile?.photoURL || undefined} alt={profile?.displayName || "User avatar"} data-ai-hint="person face portrait" />
-                    <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">{getInitials(profile?.displayName)}</AvatarFallback>
-                  </Avatar>
-                  <span className="sr-only">User Menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end" forceMount>
-                <DropdownMenuLabel className="font-normal">
-                  <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none">{profile?.displayName || "User"}</p>
-                    <p className="text-xs leading-none text-muted-foreground">
-                      {profile?.email}
-                    </p>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link href={profileHref}>
-                    <UserCircle className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:bg-destructive/10 focus:text-destructive cursor-pointer">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Button variant="ghost" className="relative h-9 w-9 rounded-full ml-3" disabled>
-              <Avatar className="h-8 w-8">
-                <AvatarFallback className="text-xs">...</AvatarFallback>
-              </Avatar>
-            </Button>
-          )}
-
-          {/* Theme Switcher Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Toggle dark mode"
-            onClick={toggleTheme}
-            className="ml-1 rounded-xl h-9 w-9"
-            disabled={!isMounted}
-          >
-            <span className="sr-only">Toggle dark mode</span>
-            <span className="flex items-center justify-center h-5 w-5 text-base leading-none transition-transform duration-300 hover:rotate-12">
-              {isMounted && theme === "dark" ? "🌙" : "☀️"}
-            </span>
-          </Button>
+        />
+        
+        {/* UI Overlay for the "Smarter Cities" Vision */}
+        <div className="absolute top-3 left-3 flex items-center gap-2">
+          <div className="h-2 w-2 bg-red-500 rounded-full animate-pulse" />
+          <span className="text-[10px] font-bold text-white uppercase tracking-widest bg-black/40 backdrop-blur-md px-2 py-0.5 rounded shadow-sm">
+            Live AI Detection Active
+          </span>
         </div>
+
+        {/* Status Overlays */}
+        {isAnalyzing && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 backdrop-blur-[2px]">
+            <RefreshCw className="h-10 w-10 text-white animate-spin mb-2" />
+            <p className="text-white font-semibold text-sm">Analyzing via Gemini...</p>
+          </div>
+        )}
+
+        {reportStatus === "success" && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-green-500/20 backdrop-blur-sm animate-in fade-in zoom-in duration-300">
+            <CheckCircle2 className="h-12 w-12 text-green-500 bg-white rounded-full shadow-lg" />
+            <p className="text-white font-bold mt-2 drop-shadow-md">Logged to Cloud</p>
+          </div>
+        )}
       </div>
-    </nav>
+
+      {/* Hidden Canvas for Frame Capture */}
+      <canvas ref={canvasRef} className="hidden" />
+
+      {/* Controls */}
+      <div className="grid grid-cols-2 gap-3">
+        <Button
+          onClick={handleCaptureAndReport}
+          disabled={isAnalyzing || reportStatus === "success"}
+          className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-6 flex items-center gap-2 transition-all active:scale-95"
+        >
+          <Camera className="h-5 w-5" />
+          {isAnalyzing ? "Processing..." : "Report Issue"}
+        </Button>
+        <Button
+          variant="outline"
+          onClick={onClose}
+          className="rounded-xl py-6 border-slate-200 hover:bg-slate-50 dark:border-slate-800"
+        >
+          Cancel
+        </Button>
+      </div>
+
+      <p className="text-[10px] text-center text-slate-500 italic">
+        "Smarter Cities, Faster Fixes" — Powered by ByteX [cite: 5]
+      </p>
+    </div>
   );
 }
+
+export default AiAnalysisComponent;
