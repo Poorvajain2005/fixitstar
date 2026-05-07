@@ -1,21 +1,11 @@
-<<<<<<< HEAD
 "use client";
 
 import React from "react";
-
 import Link from "next/link";
-
 import { motion } from "framer-motion";
-
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
-
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-
 import { Badge } from "@/components/ui/badge";
-
 import {
   User,
   Building,
@@ -28,151 +18,68 @@ import {
   Radar,
   Layers3,
 } from "lucide-react";
-=======
-'use client';
-
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { User, Building, ArrowRight, CheckCircle, Shield, MapPin, Camera } from "lucide-react";
-import Link from "next/link";
->>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
 
 const GetStarted = () => {
   const userTypes = [
     {
       id: "citizen",
-<<<<<<< HEAD
-
-      icon: <User className="h-7 w-7" />,
-
+      icon: <User className="h-7 w-7 text-blue-600" />,
       title: "Citizen Access",
-
       description:
         "Report infrastructure problems, monitor civic issue resolution, and participate in AI-assisted urban governance.",
-
       steps: [
         "Create your civic account",
         "Verify your identity",
         "Enable GPS permissions",
         "Start reporting local issues",
       ],
-
-      buttonText:
-        "Continue as Citizen",
-
-      buttonLink:
-        "/login/citizen",
-
-      gradient:
-        "from-blue-500/10 to-cyan-500/10",
+      buttonText: "Continue as Citizen",
+      buttonLink: "/login/citizen",
+      gradient: "from-blue-500/10 to-cyan-500/10",
     },
-
     {
       id: "admin",
-
-      icon: (
-        <Building className="h-7 w-7" />
-      ),
-
-      title:
-        "Authority Dashboard",
-
+      icon: <Building className="h-7 w-7 text-violet-600" />,
+      title: "Authority Dashboard",
       description:
         "Manage issue escalation workflows, monitor analytics, and coordinate intelligent civic response systems.",
-
       steps: [
         "Request municipality access",
         "Complete authority verification",
         "Access governance dashboard",
         "Manage civic operations",
       ],
-
-      buttonText:
-        "Continue as Authority",
-
-      buttonLink:
-        "/login/admin",
-
-      gradient:
-        "from-violet-500/10 to-fuchsia-500/10",
+      buttonText: "Continue as Authority",
+      buttonLink: "/login/admin",
+      gradient: "from-violet-500/10 to-fuchsia-500/10",
     },
-=======
-      icon: <User className="h-8 w-8 text-primary" />,
-      title: "For Citizens",
-      description: "Report issues, track progress, and make your community better",
-      steps: [
-        "Create your citizen account",
-        "Verify your email address",
-        "Download the mobile app (optional)",
-        "Start reporting issues in your area"
-      ],
-      buttonText: "Citizen Sign Up",
-      buttonLink: "/login/citizen"
-    },
-    {
-      id: "admin",
-      icon: <Building className="h-8 w-8 text-primary" />,
-      title: "For Administrators",
-      description: "Manage reports, assign tasks, and monitor resolution progress",
-      steps: [
-        "Request admin access from your municipality",
-        "Complete verification process",
-        "Access the admin dashboard",
-        "Start managing community reports"
-      ],
-      buttonText: "Admin Login",
-      buttonLink: "/login/admin"
-    }
->>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
   ];
 
   const requirements = [
     {
-<<<<<<< HEAD
       id: "security",
-
-      icon: (
-        <ShieldCheck className="h-6 w-6" />
-      ),
-
-      title:
-        "Secure Authentication",
-
+      icon: <ShieldCheck className="h-6 w-6 text-blue-600" />,
+      title: "Secure Authentication",
       items: [
         "Verified email identity",
         "Role-based authorization",
         "Protected civic credentials",
       ],
     },
-
     {
       id: "reporting",
-
-      icon: (
-        <Camera className="h-6 w-6" />
-      ),
-
-      title:
-        "AI Issue Reporting",
-
+      icon: <Camera className="h-6 w-6 text-violet-600" />,
+      title: "AI Issue Reporting",
       items: [
         "Photo & video uploads",
         "Contextual issue details",
         "Multimodal AI analysis",
       ],
     },
-
     {
       id: "location",
-
-      icon: (
-        <MapPinned className="h-6 w-6" />
-      ),
-
-      title:
-        "Geospatial Services",
-
+      icon: <MapPinned className="h-6 w-6 text-emerald-600" />,
+      title: "Geospatial Services",
       items: [
         "GPS-enabled device",
         "Location permissions",
@@ -182,7 +89,7 @@ const GetStarted = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden py-28">
+    <section className="relative overflow-hidden py-28 bg-background">
       {/* BACKGROUND */}
       <div className="absolute inset-0 -z-20">
         {/* GRID */}
@@ -190,281 +97,194 @@ const GetStarted = () => {
 
         {/* GLOWS */}
         <div className="absolute top-0 left-0 h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-3xl" />
-
         <div className="absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-violet-500/10 blur-3xl" />
       </div>
 
       <div className="container relative z-10 mx-auto px-4">
         {/* HEADER */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.5,
-          }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
           className="mx-auto mb-20 max-w-4xl text-center"
         >
-          <Badge className="mb-6 rounded-full border border-blue-500/20 bg-blue-500/10 px-5 py-2 text-blue-600">
+          <Badge className="mb-6 rounded-full border border-blue-500/20 bg-blue-500/10 px-5 py-2 text-blue-600 hover:bg-blue-500/15">
             <Sparkles className="mr-2 h-4 w-4" />
             AI Governance Platform
           </Badge>
 
           <h1 className="text-5xl md:text-6xl font-black tracking-tight leading-tight">
-            Get Started With
+            Get Started With{" "}
             <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
-              {" "}
               FixIt
             </span>
           </h1>
 
           <p className="mx-auto mt-8 max-w-3xl text-xl leading-relaxed text-muted-foreground">
-            Join citizens and authorities
-            using AI-powered civic
-            intelligence to improve
-            infrastructure management,
-            transparency, and urban
-            governance systems.
+            Join citizens and authorities using AI-powered civic intelligence to improve
+            infrastructure management, transparency, and urban governance systems.
           </p>
         </motion.div>
 
         {/* USER TYPE CARDS */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          {userTypes.map(
-            (userType, index) => (
-              <motion.div
-                key={userType.id}
-                initial={{
-                  opacity: 0,
-                  y: 30,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                }}
-                transition={{
-                  duration: 0.45,
-                  delay:
-                    index * 0.1,
-                }}
-              >
-                <Card className="group relative h-full overflow-hidden rounded-[36px] border border-black/5 bg-white/80 backdrop-blur-2xl shadow-[0_10px_60px_rgba(0,0,0,0.06)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_80px_rgba(59,130,246,0.12)]">
-                  {/* GRADIENT */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${userType.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
-                  />
+          {userTypes.map((userType, index) => (
+            <motion.div
+              key={userType.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: index * 0.1 }}
+            >
+              <Card className="group relative h-full overflow-hidden rounded-[36px] border border-black/5 bg-white/85 dark:bg-zinc-950/80 backdrop-blur-2xl shadow-[0_10px_60px_rgba(0,0,0,0.06)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_80px_rgba(59,130,246,0.12)]">
+                {/* GRADIENT HOVER EFFECT */}
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${userType.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
+                />
 
-                  {/* LIGHT */}
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
+                {/* LIGHT REFLECTION LINE */}
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-black/10 dark:via-white/10 to-transparent" />
 
-                  <CardContent className="relative z-10 flex h-full flex-col justify-between p-8 md:p-10">
-                    <div>
-                      {/* ICON */}
-                      <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-3xl border border-black/5 bg-white shadow-lg">
-                        {userType.icon}
-                      </div>
-
-                      {/* TITLE */}
-                      <h2 className="text-3xl font-black tracking-tight">
-                        {userType.title}
-                      </h2>
-
-                      {/* DESC */}
-                      <p className="mt-5 text-[15px] leading-relaxed text-muted-foreground">
-                        {userType.description}
-                      </p>
-
-                      {/* STEPS */}
-                      <div className="mt-8 space-y-4">
-                        {userType.steps.map(
-                          (
-                            step,
-                            idx
-                          ) => (
-                            <div
-                              key={`${userType.id}-${idx}`}
-                              className="flex items-start gap-3"
-                            >
-                              <div className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/10">
-                                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                              </div>
-
-                              <span className="text-sm text-muted-foreground">
-                                {step}
-                              </span>
-                            </div>
-                          )
-                        )}
-                      </div>
+                <CardContent className="relative z-10 flex h-full flex-col justify-between p-8 md:p-10">
+                  <div>
+                    {/* ICON HOLDER */}
+                    <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-3xl border border-black/5 bg-white dark:bg-zinc-900 shadow-lg">
+                      {userType.icon}
                     </div>
 
-                    {/* BUTTON */}
-                    <Button
-                      asChild
-                      className="mt-10 h-14 rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 shadow-xl shadow-blue-500/20"
-                    >
-                      <Link
-                        href={
-                          userType.buttonLink
-                        }
-                      >
-                        {
-                          userType.buttonText
-                        }
+                    {/* TITLE */}
+                    <h2 className="text-3xl font-black tracking-tight text-foreground">
+                      {userType.title}
+                    </h2>
 
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            )
-          )}
+                    {/* DESC */}
+                    <p className="mt-5 text-[15px] leading-relaxed text-muted-foreground">
+                      {userType.description}
+                    </p>
+
+                    {/* STEPS LIST */}
+                    <div className="mt-8 space-y-4">
+                      {userType.steps.map((step, idx) => (
+                        <div
+                          key={`${userType.id}-${idx}`}
+                          className="flex items-start gap-3"
+                        >
+                          <div className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/10">
+                            <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                          </div>
+                          <span className="text-sm text-muted-foreground">
+                            {step}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* BUTTON ACTION */}
+                  <Button
+                    asChild
+                    className="mt-10 h-14 rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 text-white shadow-xl shadow-blue-500/20 hover:shadow-blue-500/30 transition-all duration-300"
+                  >
+                    <Link href={userType.buttonLink}>
+                      {userType.buttonText}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
         </div>
 
         {/* REQUIREMENTS */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.5,
-            delay: 0.2,
-          }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-24"
         >
-          <div className="relative overflow-hidden rounded-[40px] border border-black/5 bg-white/80 backdrop-blur-2xl shadow-[0_10px_60px_rgba(0,0,0,0.05)]">
+          <div className="relative overflow-hidden rounded-[40px] border border-black/5 bg-white/85 dark:bg-zinc-950/80 backdrop-blur-2xl shadow-[0_10px_60px_rgba(0,0,0,0.05)]">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/[0.03] via-transparent to-violet-500/[0.03]" />
 
             <div className="relative z-10 p-10 md:p-14">
               <div className="mb-12 text-center">
-                <Badge className="mb-5 rounded-full border border-violet-500/20 bg-violet-500/10 px-5 py-2 text-violet-600">
+                <Badge className="mb-5 rounded-full border border-violet-500/20 bg-violet-500/10 px-5 py-2 text-violet-600 hover:bg-violet-500/15">
                   <Layers3 className="mr-2 h-4 w-4" />
                   Platform Infrastructure
                 </Badge>
 
-                <h2 className="text-4xl font-black tracking-tight">
+                <h2 className="text-4xl font-black tracking-tight text-foreground">
                   What You’ll Need
                 </h2>
 
                 <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-                  FixIt integrates AI-driven
-                  governance workflows,
-                  geospatial intelligence,
-                  and secure civic identity
-                  systems.
+                  FixIt integrates AI-driven governance workflows, geospatial
+                  intelligence, and secure civic identity systems.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-                {requirements.map(
-                  (requirement) => (
-                    <div
-                      key={
-                        requirement.id
-                      }
-                      className="rounded-[28px] border border-black/5 bg-white p-8 shadow-lg"
-                    >
-                      <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500/10 to-violet-500/10">
-                        {
-                          requirement.icon
-                        }
-                      </div>
-
-                      <h3 className="mb-5 text-xl font-bold tracking-tight">
-                        {
-                          requirement.title
-                        }
-                      </h3>
-
-                      <div className="space-y-4">
-                        {requirement.items.map(
-                          (
-                            item,
-                            idx
-                          ) => (
-                            <div
-                              key={idx}
-                              className="flex items-start gap-3"
-                            >
-                              <div className="mt-1 h-2 w-2 rounded-full bg-primary" />
-
-                              <span className="text-sm leading-relaxed text-muted-foreground">
-                                {item}
-                              </span>
-                            </div>
-                          )
-                        )}
-                      </div>
+                {requirements.map((requirement) => (
+                  <div
+                    key={requirement.id}
+                    className="rounded-[28px] border border-black/5 dark:border-white/5 bg-white dark:bg-zinc-900 p-8 shadow-lg"
+                  >
+                    <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500/10 to-violet-500/10">
+                      {requirement.icon}
                     </div>
-                  )
-                )}
+
+                    <h3 className="mb-5 text-xl font-bold tracking-tight text-foreground">
+                      {requirement.title}
+                    </h3>
+
+                    <div className="space-y-4">
+                      {requirement.items.map((item, idx) => (
+                        <div key={idx} className="flex items-start gap-3">
+                          <div className="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-blue-500" />
+                          <span className="text-sm leading-relaxed text-muted-foreground">
+                            {item}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* CTA */}
+        {/* BOTTOM CTA */}
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: 0.5,
-            delay: 0.3,
-          }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-24 text-center"
         >
           <Badge className="mb-6 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-5 py-2 text-emerald-600">
-            <Radar className="mr-2 h-4 w-4" />
+            <Radar className="mr-2 h-4 w-4 animate-pulse" />
             Smart Governance Starts Here
           </Badge>
 
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-foreground">
             Ready To Improve
             <br />
             Your Community?
           </h2>
 
           <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
-            Participate in a modern civic
-            ecosystem powered by AI-driven
-            analytics, transparency, and
-            real-time urban intelligence.
+            Participate in a modern civic ecosystem powered by AI-driven
+            analytics, transparency, and real-time urban intelligence.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button
               size="lg"
               asChild
-              className="h-14 rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 px-8 shadow-xl shadow-blue-500/20"
+              className="h-14 rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 text-white px-8 shadow-xl shadow-blue-500/20 hover:shadow-blue-500/30 transition-all duration-300"
             >
               <Link href="/login/citizen">
                 <User className="mr-2 h-5 w-5" />
@@ -476,7 +296,7 @@ const GetStarted = () => {
               size="lg"
               variant="outline"
               asChild
-              className="h-14 rounded-2xl border-black/10 bg-white px-8 shadow-lg"
+              className="h-14 rounded-2xl border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 px-8 shadow-lg hover:bg-neutral-50 dark:hover:bg-zinc-800"
             >
               <Link href="/login/admin">
                 <Building className="mr-2 h-5 w-5" />
@@ -487,110 +307,6 @@ const GetStarted = () => {
         </motion.div>
       </div>
     </section>
-=======
-      id: "account-reqs",
-      icon: <Shield className="h-6 w-6 text-primary" />,
-      title: "Account Requirements",
-      items: ["Valid email address", "Basic personal information", "Location permissions (for reporting)"]
-    },
-    {
-      id: "reporting-reqs",
-      icon: <Camera className="h-6 w-6 text-primary" />,
-      title: "Reporting Requirements",
-      items: ["Clear photos of the issue", "Accurate location information", "Detailed description", "Category selection"]
-    },
-    {
-      id: "location-reqs",
-      icon: <MapPin className="h-6 w-6 text-primary" />,
-      title: "Location Services",
-      items: ["GPS enabled device", "Location permissions granted", "Internet connection", "Camera access (for photos)"]
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-background py-24">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Get Started</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Join thousands of citizens and administrators working together to create cleaner, safer communities.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          {userTypes.map((userType) => (
-            <Card key={userType.id} className="hover:shadow-lg transition-shadow duration-300 border-border flex flex-col justify-between">
-              <div>
-                <CardHeader className="text-center pb-4">
-                  <div className="flex justify-center mb-4">
-                    {userType.icon}
-                  </div>
-                  <CardTitle className="text-xl">{userType.title}</CardTitle>
-                  <p className="text-muted-foreground">{userType.description}</p>
-                </CardHeader>
-                <CardContent className="flex justify-center">
-                  {/* Changed block to wrap list in an inline-block div to keep steps left-aligned but centered on card */}
-                  <ul className="text-sm text-muted-foreground space-y-3 mb-6 inline-block text-left max-w-xs">
-                    {userType.steps.map((step, idx) => (
-                      <li key={`${userType.id}-step-${idx}`} className="flex items-start">
-                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 mr-2 flex-shrink-0" />
-                        <span>{step}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </div>
-              <div className="p-6 pt-0">
-                <Button asChild className="w-full">
-                  <Link href={userType.buttonLink}>
-                    {userType.buttonText} <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        <div className="bg-muted/50 rounded-lg p-8 mb-16">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">What You'll Need</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {requirements.map((requirement) => (
-              <div key={requirement.id} className="text-center">
-                <div className="flex justify-center mb-4">
-                  {requirement.icon}
-                </div>
-                <h3 className="font-semibold mb-4">{requirement.title}</h3>
-                <ul className="text-sm text-muted-foreground space-y-2">
-                  {requirement.items.map((item, idx) => (
-                    <li key={`${requirement.id}-item-${idx}`}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">Ready to Make a Difference?</h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join our growing community of proactive citizens and dedicated administrators working together to improve neighborhoods across the country.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" asChild>
-              <Link href="/login/citizen">
-                <User className="mr-2 h-5 w-5" /> Citizen Portal
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link href="/login/admin">
-                <Building className="mr-2 h-5 w-5" /> Admin Portal
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
->>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
   );
 };
 

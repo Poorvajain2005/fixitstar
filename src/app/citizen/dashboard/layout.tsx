@@ -1,10 +1,9 @@
-<<<<<<< HEAD
 "use client";
 
-import type { ReactNode } from "react";
-
+import React, { type ReactNode } from "react";
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import { Navbar } from "@/components/shared/navbar";
-
 import {
   FilePenLine,
   History,
@@ -14,22 +13,9 @@ import {
   Radar,
 } from "lucide-react";
 
-import { usePathname } from "next/navigation";
-
-import { motion } from "framer-motion";
-=======
-
-"use client"; // Required for using hooks like usePathname
-
-import { Navbar } from "@/components/shared/navbar";
-import { FilePenLine, History } from 'lucide-react'; // Import icons for nav items
-import { usePathname } from 'next/navigation'; // Import usePathname
->>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
-
 export default function CitizenDashboardLayout({
   children,
 }: {
-<<<<<<< HEAD
   children: ReactNode;
 }) {
   const pathname = usePathname();
@@ -39,21 +25,18 @@ export default function CitizenDashboardLayout({
       href: "/citizen/dashboard/report",
       label: "Report Issue",
       icon: <FilePenLine className="h-4 w-4" />,
-      isActive:
-        pathname === "/citizen/dashboard/report",
+      isActive: pathname === "/citizen/dashboard/report",
     },
-
     {
       href: "/citizen/dashboard",
       label: "My Issues",
       icon: <History className="h-4 w-4" />,
-      isActive:
-        pathname === "/citizen/dashboard",
+      isActive: pathname === "/citizen/dashboard",
     },
   ];
 
   return (
-    <div className="ui-shell relative min-h-screen overflow-hidden text-foreground">
+    <div className="ui-shell relative min-h-screen overflow-hidden text-foreground bg-background">
       {/* BACKGROUND */}
       <div className="fixed inset-0 -z-30 overflow-hidden">
         {/* GRID */}
@@ -95,13 +78,13 @@ export default function CitizenDashboardLayout({
         <div className="mx-auto max-w-7xl">
           {/* TOP BAR */}
           <div className="mb-6 flex flex-col justify-between gap-5 xl:flex-row xl:items-center">
-            {/* LEFT */}
+            {/* LEFT SIDE HEADER & BADGES */}
             <div className="flex items-start gap-4">
-              <div className="relative">
+              <div className="relative flex-shrink-0">
                 <div className="absolute inset-0 rounded-full bg-blue-500/20 blur-2xl" />
 
-                <div className="relative flex h-14 w-14 items-center justify-center rounded-3xl border border-white/10 bg-gradient-to-br from-blue-500/20 to-violet-500/20 backdrop-blur-xl shadow-xl">
-                  <Radar className="h-7 w-7 text-primary" />
+                <div className="relative flex h-14 w-14 items-center justify-center rounded-3xl border border-black/5 dark:border-white/10 bg-gradient-to-br from-blue-500/20 to-violet-500/20 backdrop-blur-xl shadow-xl">
+                  <Radar className="h-7 w-7 text-blue-500" />
                 </div>
               </div>
 
@@ -109,7 +92,6 @@ export default function CitizenDashboardLayout({
                 <div className="mb-2 flex flex-wrap items-center gap-2">
                   <div className="flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 backdrop-blur-xl">
                     <div className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
-
                     <span className="text-xs font-semibold text-emerald-500">
                       Systems Operational
                     </span>
@@ -117,76 +99,67 @@ export default function CitizenDashboardLayout({
 
                   <div className="flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 backdrop-blur-xl">
                     <Sparkles className="h-3 w-3 text-blue-500" />
-
                     <span className="text-xs font-semibold text-blue-500">
                       AI Governance Active
                     </span>
                   </div>
                 </div>
 
-                <h1 className="text-2xl font-black tracking-tight md:text-3xl">
+                <h1 className="text-2xl font-black tracking-tight md:text-3xl text-foreground">
                   Citizen Intelligence Dashboard
                 </h1>
 
-                <p className="mt-1 max-w-2xl text-muted-foreground">
-                  AI-powered civic reporting,
-                  geospatial monitoring,
-                  severity analysis, and
-                  intelligent governance
-                  workflows.
+                <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+                  AI-powered civic reporting, geospatial monitoring, severity
+                  analysis, and intelligent governance workflows.
                 </p>
               </div>
             </div>
 
-            {/* RIGHT METRICS */}
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-              {/* CARD */}
-              <div className="ui-glass rounded-2xl px-4 py-3">
-                <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
-                  <Activity className="h-3.5 w-3.5" />
+            {/* RIGHT SIDE STATS GRID */}
+            <div className="grid grid-cols-2 gap-3 sm:flex sm:items-center">
+              {/* CARD: ACTIVE */}
+              <div className="rounded-2xl border border-black/5 dark:border-white/10 bg-white/60 dark:bg-zinc-950/40 backdrop-blur-2xl px-5 py-3 shadow-sm min-w-[120px]">
+                <div className="mb-1 flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                  <Activity className="h-3.5 w-3.5 text-blue-500" />
                   Active Reports
                 </div>
-
-                <div className="text-2xl font-black tracking-tight">
+                <div className="text-2xl font-black tracking-tight text-foreground">
                   128
                 </div>
               </div>
 
-              {/* CARD */}
-              <div className="ui-glass rounded-2xl px-4 py-3">
-                <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
-                  <ShieldCheck className="h-3.5 w-3.5" />
+              {/* CARD: RESOLVED */}
+              <div className="rounded-2xl border border-black/5 dark:border-white/10 bg-white/60 dark:bg-zinc-950/40 backdrop-blur-2xl px-5 py-3 shadow-sm min-w-[120px]">
+                <div className="mb-1 flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                  <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
                   Resolved
                 </div>
-
                 <div className="text-2xl font-black tracking-tight text-emerald-500">
                   94
                 </div>
               </div>
 
-              {/* CARD */}
-              <div className="ui-glass col-span-2 rounded-2xl px-4 py-3 md:col-span-1">
-                <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
-                  <Sparkles className="h-3.5 w-3.5" />
+              {/* CARD: ACCURACY */}
+              <div className="col-span-2 rounded-2xl border border-black/5 dark:border-white/10 bg-white/60 dark:bg-zinc-950/40 backdrop-blur-2xl px-5 py-3 shadow-sm min-w-[120px] sm:col-span-1">
+                <div className="mb-1 flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                  <Sparkles className="h-3.5 w-3.5 text-violet-500" />
                   AI Accuracy
                 </div>
-
-                <div className="text-2xl font-black tracking-tight text-blue-500">
+                <div className="text-2xl font-black tracking-tight text-violet-500">
                   97%
                 </div>
               </div>
             </div>
           </div>
 
-          {/* MAIN CONTAINER */}
-          <div className="ui-glass relative overflow-hidden rounded-[36px]">
-            {/* INNER OVERLAY */}
+          {/* MAIN GLASS CONTAINER */}
+          <div className="relative overflow-hidden rounded-[36px] border border-black/5 dark:border-white/10 bg-white/60 dark:bg-zinc-950/20 backdrop-blur-3xl shadow-xl">
+            {/* INNER HIGHLIGHT OVERLAYS */}
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5" />
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 dark:via-zinc-800 to-transparent" />
 
-            {/* TOP HIGHLIGHT */}
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-
-            {/* CONTENT */}
+            {/* MAIN CHILDREN SLOTS */}
             <div className="relative z-10 p-4 md:p-8">
               {children}
             </div>
@@ -196,27 +169,3 @@ export default function CitizenDashboardLayout({
     </div>
   );
 }
-=======
-  children: React.ReactNode;
-}) {
-  const pathname = usePathname(); // Get current path
-
-  const citizenNavItems = [
-    { href: "/citizen/dashboard/report", label: "Report Issue", icon: <FilePenLine className="h-4 w-4" />, isActive: pathname === "/citizen/dashboard/report" },
-    { href: "/citizen/dashboard", label: "My Issues", icon: <History className="h-4 w-4" />, isActive: pathname === "/citizen/dashboard" },
-    // The profile link is handled by the dropdown in the Navbar now.
-    // Keeping this structure allows adding more main nav links easily if needed later.
-  ];
-
-  return (
-    <div className="flex flex-col min-h-screen bg-[url('https://picsum.photos/seed/citizenbg/1920/1080')] bg-cover bg-center bg-fixed">
-      {/* Pass isActive status to Navbar */}
-      <Navbar navItems={citizenNavItems} userType="Citizen" />
-       {/* Added semi-transparent background, backdrop blur, padding, rounded corners, and shadow to main content area */}
-       <main className="flex-1 container mx-auto px-4 py-8 bg-background/90 backdrop-blur-sm my-6 rounded-lg shadow-xl">
-        {children}
-      </main>
-    </div>
-  );
-}
->>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc

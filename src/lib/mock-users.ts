@@ -28,18 +28,12 @@ export type UserProfile = {
   issuesResolvedThisMonth?: number;
 };
 
-<<<<<<< HEAD
-// In-memory map of "email::role" -> profile
+// In-memory map of "email::role" -> profile to avoid key collisions
 const userProfiles: Record<string, UserProfile> = {};
 
 const getProfileKey = (email: string, role: 'citizen' | 'admin') =>
   `${email.toLowerCase()}::${role}`;
 
-=======
-// In-memory map of email -> profile
-const userProfiles: Record<string, UserProfile> = {};
-
->>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
 // Helper to create a default profile for a new user
 export function createDefaultProfile(email: string, role: 'citizen' | 'admin'): UserProfile {
   const now = new Date();
@@ -77,7 +71,6 @@ export function createDefaultProfile(email: string, role: 'citizen' | 'admin'): 
 // Add user and create profile
 export function addUser(email: string, password: string, role: 'citizen' | 'admin') {
   users.push({ email, password, role });
-<<<<<<< HEAD
   const key = getProfileKey(email, role);
   if (!userProfiles[key]) {
     userProfiles[key] = createDefaultProfile(email, role);
@@ -106,21 +99,6 @@ export function setUserProfile(email: string, profile: UserProfile, role?: 'citi
   const effectiveRole = role ?? profile.role;
   const key = getProfileKey(email, effectiveRole);
   userProfiles[key] = { ...profile, role: effectiveRole };
-=======
-  if (!userProfiles[email]) {
-    userProfiles[email] = createDefaultProfile(email, role);
-  }
-}
-
-// Get user profile by email
-export function getUserProfile(email: string): UserProfile | undefined {
-  return userProfiles[email];
-}
-
-// Update user profile by email
-export function setUserProfile(email: string, profile: UserProfile) {
-  userProfiles[email] = profile;
->>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
 }
 
 export function findUser(email: string, password: string, role?: 'citizen' | 'admin') {
@@ -130,7 +108,6 @@ export function findUser(email: string, password: string, role?: 'citizen' | 'ad
 export function userExists(email: string) {
   return users.some(u => u.email === email);
 }
-<<<<<<< HEAD
 
 export function updateUserPassword(
   email: string,
@@ -149,5 +126,3 @@ export function updateUserPassword(
   user.password = nextPassword;
   return { ok: true, message: "Password updated successfully." };
 }
-=======
->>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc

@@ -41,11 +41,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "firebase": "^11.10.0",
-<<<<<<< HEAD
     "framer-motion": "^12.38.0",
-=======
-    "framer-motion": "^12.23.12",
->>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
     "genkit": "^1.6.2",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",

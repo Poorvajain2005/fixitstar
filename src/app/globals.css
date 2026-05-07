@@ -4,11 +4,7 @@
 
 body {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-<<<<<<< HEAD
   @apply bg-background text-foreground transition-colors duration-300;
-=======
-  @apply bg-background text-foreground transition-colors duration-200;
->>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
 }
 
 @layer base {
@@ -50,6 +46,7 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+
     --radius: 0.5rem;
 
     --sidebar-background: 195 17% 97%;
@@ -105,16 +102,29 @@ body {
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 210 5% 30%;
     --sidebar-ring: 207 68% 53%;
-<<<<<<< HEAD
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    line-height: 1.5;
+    font-weight: 400;
+
+    color-scheme: light dark;
+    color: hsl(var(--foreground));
+    background-color: hsl(var(--background));
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
   }
 }
 
-=======
-  } /* ✅ Yahan .dark block complete band ho gaya */
-}
-
-/* ✅ Map overrides ko global level par rakha hai taaki light/dark dono mode mein map render ho sake */
->>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
+/* Leaflet Map Fixes */
 .leaflet-container {
   height: 100% !important;
   width: 100% !important;
@@ -128,33 +138,7 @@ body {
   min-height: 400px !important;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-}
-
-@layer base {
-  html {
-    line-height: 1.5;
-    font-weight: 400;
-
-<<<<<<< HEAD
-=======
-    color-scheme: light dark;
->>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
-    color: var(--foreground);
-    background-color: var(--background);
-
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-text-size-adjust: 100%;
-  }
-<<<<<<< HEAD
-}
-
+/* Custom UI Components */
 @layer components {
   .ui-shell {
     @apply min-h-screen bg-slate-50/70 dark:bg-slate-950/95;
@@ -175,6 +159,4 @@ body {
   .ui-subtext {
     @apply text-slate-700 dark:text-slate-300;
   }
-=======
->>>>>>> fddd92937dd0f053060e403c1a98d375f5e3c0fc
 }
